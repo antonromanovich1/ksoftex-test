@@ -12,14 +12,14 @@ import {
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiKeyInterceptor } from './app/interceptors/api-key.interceptors';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { apiKeyInterceptor } from './app/interceptors/api-key.interceptors';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    { provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },
+    provideHttpClient(withInterceptors([apiKeyInterceptor])),
   ],
 });
