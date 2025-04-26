@@ -1,14 +1,19 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: '',
-    redirectTo: 'folder/inbox',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
-    path: 'folder/:id',
+    path: 'home',
     loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
+      import('./components/home/home.component').then((m) => m.HomeComponent),
   },
 ];
