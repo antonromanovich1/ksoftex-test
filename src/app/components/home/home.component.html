@@ -58,6 +58,17 @@
           </button>
         </div>
       </div>
+
+      <ion-list>
+        @for(record of history$(); track record.date) {
+        <ion-item>
+          <ion-label>{{ record.date | date : "short" }}</ion-label>
+          <ion-label>{{ record.from + " / " + record.to }}</ion-label>
+          <ion-label>{{ record.amount + " => " + record.result }}</ion-label>
+          <ion-label>{{ "Exchange rate: " + record.rate }}</ion-label>
+        </ion-item>
+        }
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>
