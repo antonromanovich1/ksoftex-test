@@ -54,7 +54,7 @@ export class CurrencyService {
       .get<CurrencyRate>(
         `${this.BASE_URL}/latest?currencies=${to}&base_currency=${from}`
       )
-      .pipe(map((data) => data));
+      .pipe(map(({ data }) => data));
   }
 
   private loadCurrencyList() {
