@@ -6,7 +6,11 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { Currency, CurrencyResponse } from '../models/currency.model';
+import {
+  Currency,
+  CurrencyRate,
+  CurrencyResponse,
+} from '../models/currency.model';
 import { map, tap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
@@ -45,11 +49,18 @@ export class CurrencyService {
       : this.loadCurrencyList();
   }
 
+  public getRate(from: string, to: string) {
+    return this.http
+      .get<CurrencyRate>(
+        `${this.BASE_URL}/latest?currencies=${to}&base_currency=${from}`
+      )
+      .pipe(map((data) => data));
+  }
+
   private loadCurrencyList() {
     return this.http.get<CurrencyResponse>(`${this.BASE_URL}/currencies`).pipe(
       map(({ data }) => Object.values(data)),
-      tap((data) => this.currencyList$.set(data)),
-      tap((data) => console.log(data, 'currencies'))
+      tap((data) => this.currencyList$.set(data))
     );
   }
 }

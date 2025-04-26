@@ -13,3 +13,9 @@ export interface CurrencyResponse {
     [key: string]: Currency;
   };
 }
+
+export interface CurrencyRate {
+  data: {
+    [key: string]: number;
+  };
+}
