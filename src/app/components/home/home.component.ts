@@ -1,7 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -59,5 +58,10 @@ export class HomeComponent {
         this.result$.set(+result.toFixed(2));
       });
     }
+  }
+
+  reverse() {
+    const { from, to, amount } = this.form.value;
+    this.form.patchValue({ from: to, to: from, amount });
   }
 }
