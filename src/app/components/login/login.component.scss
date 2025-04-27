@@ -1,0 +1,50 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.auth-card {
+  max-width: 500px;
+  width: 100%;
+}
+
+ion-segment {
+  margin-bottom: 20px;
+}
+
+form {
+  margin-bottom: 16px;
+}
+
+ion-item {
+  margin-bottom: 8px;
+}
+
+.forgot-password {
+  margin-top: 8px;
+  width: 100%;
+  text-align: right;
+}
+
+.alt-action {
+  margin-top: 20px;
+}
+
+.alt-action a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.social-login {
+  margin-top: 24px;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+ion-button {
+  color: #eee;
+  --color: #fff;
+  padding: 0;
+}

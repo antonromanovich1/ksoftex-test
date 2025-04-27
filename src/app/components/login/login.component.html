@@ -1,1 +1,140 @@
-<ion-card> </ion-card>
+<ion-content color="light" class="ion-padding">
+  <div class="auth-container">
+    <ion-card class="auth-card">
+      <ion-card-header>
+        <ion-card-title>Welcome</ion-card-title>
+      </ion-card-header>
+
+      <ion-segment #segment [(ngModel)]="segment$">
+        <ion-segment-button value="login" content-id="login">
+          <ion-icon icon="log-in-outline"></ion-icon>
+          <ion-label>Sign In</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="signup" content-id="signup">
+          <ion-icon icon="person-add-outline"></ion-icon>
+          <ion-label>Sign Up</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-card-content>
+        <!-- Login Form -->
+        <ion-segment-view>
+          <ion-segment-content id="login">
+            <form (ngSubmit)="login()">
+              <ion-item>
+                <ion-icon icon="mail-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Email</ion-label> -->
+                <ion-input
+                  label="Email"
+                  type="email"
+                  [(ngModel)]="loginForm.email"
+                  name="email"
+                  required
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon icon="lock-closed-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Password</ion-label> -->
+                <ion-input
+                  label="Password"
+                  type="password"
+                  [(ngModel)]="loginForm.password"
+                  name="password"
+                  required
+                >
+                  <ion-input-password-toggle
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+
+              <div class="is-flex is-justify-content-end w-full">
+                <ion-button type="submit" class="ion-margin-top">
+                  <ion-icon icon="log-in-outline" slot="start"></ion-icon>
+                  Sign In
+                </ion-button>
+              </div>
+
+              <div class="alt-action ion-text-center ion-margin-top">
+                <ion-text>
+                  Don't have an account?
+                  <a (click)="segment$.set('signup')">Sign Up</a>
+                </ion-text>
+              </div>
+            </form>
+          </ion-segment-content>
+          <ion-segment-content id="signup">
+            <form (ngSubmit)="signup()">
+              <ion-item>
+                <ion-icon icon="person-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Full Name</ion-label> -->
+                <ion-input
+                  label="Full Name"
+                  type="text"
+                  [(ngModel)]="signupForm.name"
+                  name="name"
+                  required
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon icon="mail-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Email</ion-label> -->
+                <ion-input
+                  label="Email"
+                  type="email"
+                  [(ngModel)]="signupForm.email"
+                  name="email"
+                  required
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon icon="lock-closed-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Password</ion-label> -->
+                <ion-input
+                  label="Password"
+                  type="password"
+                  [(ngModel)]="signupForm.password"
+                  name="password"
+                  required
+                >
+                  <ion-input-password-toggle
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon icon="lock-closed-outline" slot="start"></ion-icon>
+                <!-- <ion-label position="floating">Confirm Password</ion-label> -->
+                <ion-input
+                  label="Confirm Password"
+                  type="password"
+                  [(ngModel)]="signupForm.confirmPassword"
+                  name="confirmPassword"
+                  required
+                ></ion-input>
+              </ion-item>
+
+              <div class="is-flex is-justify-content-end w-full">
+                <ion-button type="submit" class="ion-margin-top">
+                  <ion-icon icon="person-add-outline" slot="start"></ion-icon>
+                  Sign Up
+                </ion-button>
+              </div>
+
+              <div class="alt-action ion-text-center ion-margin-top">
+                <ion-text>
+                  Already have an account?
+                  <a (click)="segment$.set('login')">Sign In</a>
+                </ion-text>
+              </div>
+            </form>
+          </ion-segment-content>
+        </ion-segment-view>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
