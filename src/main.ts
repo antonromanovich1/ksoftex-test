@@ -14,6 +14,8 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiKeyInterceptor } from './app/interceptors/api-key.interceptors';
+import { IonicStorageModule, Storage } from '@ionic/storage-angular';
+import { importProvidersFrom } from '@angular/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -21,5 +23,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([apiKeyInterceptor])),
+    importProvidersFrom(IonicStorageModule.forRoot()),
   ],
 });

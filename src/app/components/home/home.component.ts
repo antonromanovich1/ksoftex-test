@@ -17,6 +17,7 @@ import {
 } from '@ionic/angular/standalone';
 import { shareReplay } from 'rxjs';
 import { CurrencyService } from 'src/app/services/currency.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
 
   private fb = inject(NonNullableFormBuilder);
   private currencyService = inject(CurrencyService);
+  private storageService = inject(StorageService);
 
   protected result$ = signal<number | null>(null);
 
@@ -78,7 +80,7 @@ export class HomeComponent implements OnInit {
     this.form.patchValue({ from: to, to: from, amount });
   }
 
-  private saveToHistory(
+  private async saveToHistory(
     from: string,
     to: string,
     amount: number,
@@ -94,12 +96,13 @@ export class HomeComponent implements OnInit {
       result,
       rate,
     });
-    localStorage.setItem('history', JSON.stringify(history));
+    await this.storageService.setItem('history', history);
 
     this.getHistory();
   }
 
-  private getHistory() {
-    this.history$.set(JSON.parse(localStorage.getItem('history') || '[]'));
+  private async getHistory() {
+    const history = await this.storageService.getItem<any[]>('history');
+    this.history$.set(history || []);
   }
 }
