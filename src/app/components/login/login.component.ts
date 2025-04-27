@@ -1,5 +1,12 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  FormsModule,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   IonButton,
   IonCard,
@@ -26,6 +33,7 @@ import {
   personAddOutline,
   logInOutline,
 } from 'ionicons/icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -50,22 +58,31 @@ import {
     IonSegment,
     IonSegmentView,
     IonSegmentContent,
+    ReactiveFormsModule,
+    AsyncPipe,
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   segment$ = signal('login');
 
-  loginForm = {
-    email: '',
-    password: '',
-  };
+  private fb = inject(NonNullableFormBuilder);
 
-  signupForm = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
+  private authService = inject(AuthService);
+
+  private router = inject(Router);
+
+  protected authError$ = this.authService.authError$;
+
+  protected loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
+
+  protected signupForm = this.fb.group({
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
 
   constructor() {
     // Register Ionicons
@@ -78,14 +95,28 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
-    console.log('Login form submitted', this.loginForm);
-    // Implement actual login logic here
+  async login() {
+    console.log(this.loginForm.getRawValue());
+    this.authService.signIn(this.loginForm.getRawValue()).then((success) => {
+      console.log(success);
+      if (success) {
+        this.router.navigate(['/home']);
+      } else {
+        this.loginForm.get('password')?.reset();
+      }
+    });
   }
 
   signup() {
-    console.log('Signup form submitted', this.signupForm);
-    // Implement actual signup logic here
+    this.authService.signUp(this.signupForm.getRawValue()).then((success) => {
+      if (success) {
+        this.segment$.set('login');
+        this.loginForm
+          .get('email')
+          ?.setValue(this.signupForm.get('email')?.value || '');
+      } else {
+        this.signupForm.reset();
+      }
+    });
   }
-  ngOnInit() {}
 }

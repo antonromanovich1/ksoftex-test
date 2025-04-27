@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { StorageService } from './storage.service';
 import { User } from '../models/user.model';
 
@@ -20,6 +20,7 @@ export class AuthService {
   private storageService = inject(StorageService);
 
   async signIn(user: User) {
+    this.authError$.next('');
     const registry = await this.storageService.getItem<User[]>(
       this.STORAGE_KEY
     );
@@ -44,6 +45,7 @@ export class AuthService {
   }
 
   async signUp(user: User) {
+    this.authError$.next('');
     const registry = await this.storageService.getItem<User[]>(
       this.STORAGE_KEY
     );

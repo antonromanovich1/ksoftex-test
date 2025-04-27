@@ -20,14 +20,14 @@
         <!-- Login Form -->
         <ion-segment-view>
           <ion-segment-content id="login">
-            <form (ngSubmit)="login()">
+            <form [formGroup]="loginForm">
               <ion-item>
                 <ion-icon icon="mail-outline" slot="start"></ion-icon>
                 <!-- <ion-label position="floating">Email</ion-label> -->
                 <ion-input
                   label="Email"
                   type="email"
-                  [(ngModel)]="loginForm.email"
+                  formControlName="email"
                   name="email"
                   required
                 ></ion-input>
@@ -39,7 +39,7 @@
                 <ion-input
                   label="Password"
                   type="password"
-                  [(ngModel)]="loginForm.password"
+                  formControlName="password"
                   name="password"
                   required
                 >
@@ -49,8 +49,16 @@
                 </ion-input>
               </ion-item>
 
+              <div class="has-text-centered">
+                <ion-text color="danger">{{ authError$ | async }}</ion-text>
+              </div>
+
               <div class="is-flex is-justify-content-end w-full">
-                <ion-button type="submit" class="ion-margin-top">
+                <ion-button
+                  (click)="login()"
+                  type="submit"
+                  class="ion-margin-top"
+                >
                   <ion-icon icon="log-in-outline" slot="start"></ion-icon>
                   Sign In
                 </ion-button>
@@ -65,14 +73,14 @@
             </form>
           </ion-segment-content>
           <ion-segment-content id="signup">
-            <form (ngSubmit)="signup()">
+            <form [formGroup]="signupForm">
               <ion-item>
                 <ion-icon icon="person-outline" slot="start"></ion-icon>
                 <!-- <ion-label position="floating">Full Name</ion-label> -->
                 <ion-input
                   label="Full Name"
                   type="text"
-                  [(ngModel)]="signupForm.name"
+                  formControlName="name"
                   name="name"
                   required
                 ></ion-input>
@@ -84,7 +92,7 @@
                 <ion-input
                   label="Email"
                   type="email"
-                  [(ngModel)]="signupForm.email"
+                  formControlName="email"
                   name="email"
                   required
                 ></ion-input>
@@ -96,7 +104,7 @@
                 <ion-input
                   label="Password"
                   type="password"
-                  [(ngModel)]="signupForm.password"
+                  formControlName="password"
                   name="password"
                   required
                 >
@@ -106,20 +114,16 @@
                 </ion-input>
               </ion-item>
 
-              <ion-item>
-                <ion-icon icon="lock-closed-outline" slot="start"></ion-icon>
-                <!-- <ion-label position="floating">Confirm Password</ion-label> -->
-                <ion-input
-                  label="Confirm Password"
-                  type="password"
-                  [(ngModel)]="signupForm.confirmPassword"
-                  name="confirmPassword"
-                  required
-                ></ion-input>
-              </ion-item>
+              <div class="has-text-centered">
+                <ion-text color="danger">{{ authError$ | async }}</ion-text>
+              </div>
 
               <div class="is-flex is-justify-content-end w-full">
-                <ion-button type="submit" class="ion-margin-top">
+                <ion-button
+                  (click)="signup()"
+                  type="submit"
+                  class="ion-margin-top"
+                >
                   <ion-icon icon="person-add-outline" slot="start"></ion-icon>
                   Sign Up
                 </ion-button>
