@@ -19,6 +19,7 @@ import {
   IonInputPasswordToggle,
   IonItem,
   IonLabel,
+  IonNote,
   IonSegment,
   IonSegmentButton,
   IonSegmentContent,
@@ -52,6 +53,7 @@ import { AuthService } from 'src/app/services/auth.service';
     IonSegmentContent,
     ReactiveFormsModule,
     AsyncPipe,
+    IonNote,
   ],
 })
 export class LoginComponent {
