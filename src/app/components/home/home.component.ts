@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   IonHeader,
   IonContent,
@@ -14,8 +15,11 @@ import {
   IonList,
   IonItem,
   IonLabel,
+  IonIcon,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { shareReplay } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -34,6 +38,7 @@ import { StorageService } from 'src/app/services/storage.service';
     IonItem,
     IonLabel,
     DatePipe,
+    IonIcon,
   ],
 })
 export class HomeComponent implements OnInit {
@@ -44,6 +49,8 @@ export class HomeComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private currencyService = inject(CurrencyService);
   private storageService = inject(StorageService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   protected result$ = signal<number | null>(null);
 
@@ -99,6 +106,11 @@ export class HomeComponent implements OnInit {
     await this.storageService.setItem('history', history);
 
     this.getHistory();
+  }
+
+  logout() {
+    this.authService.logOut();
+    this.router.navigate(['/login']);
   }
 
   private async getHistory() {

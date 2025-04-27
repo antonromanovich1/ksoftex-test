@@ -25,14 +25,6 @@ import {
   IonSegmentView,
   IonText,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  personOutline,
-  lockClosedOutline,
-  mailOutline,
-  personAddOutline,
-  logInOutline,
-} from 'ionicons/icons';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -84,16 +76,7 @@ export class LoginComponent {
     password: ['', [Validators.required]],
   });
 
-  constructor() {
-    // Register Ionicons
-    addIcons({
-      'person-outline': personOutline,
-      'lock-closed-outline': lockClosedOutline,
-      'mail-outline': mailOutline,
-      'person-add-outline': personAddOutline,
-      'log-in-outline': logInOutline,
-    });
-  }
+  constructor() {}
 
   async login() {
     console.log(this.loginForm.getRawValue());

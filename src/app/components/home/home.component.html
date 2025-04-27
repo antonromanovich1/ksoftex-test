@@ -1,4 +1,14 @@
-<ion-header class="ion-padding">Currency Converter</ion-header>
+<ion-header class="ion-padding">
+  <div class="is-flex is-justify-content-space-between">
+    <span>Currency Converter</span>
+    <ion-icon
+      class="logout-btn"
+      (click)="logout()"
+      icon="log-out-outline"
+      slot="start"
+    ></ion-icon>
+  </div>
+</ion-header>
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-content>
