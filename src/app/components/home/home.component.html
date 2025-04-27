@@ -1,0 +1,84 @@
+<ion-header class="ion-padding">
+  <div class="is-flex is-justify-content-space-between">
+    <span>Currency Converter</span>
+    <ion-icon
+      class="logout-btn"
+      (click)="logout()"
+      icon="log-out-outline"
+      slot="start"
+    ></ion-icon>
+  </div>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <div [formGroup]="form" class="level is-relative">
+        <div class="level-left">
+          <input
+            formControlName="amount"
+            min="0"
+            step="0.01"
+            class="input is-normal"
+            type="number"
+            placeholder="You have"
+          />
+          <div class="select is-normal">
+            <select formControlName="from">
+              @for(currency of currencyList$ | async; track currency.code) {
+              <option [value]="currency.code">{{ currency.code }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="level-right">
+          <input
+            [value]="result$()"
+            class="input"
+            type="number"
+            readonly
+            placeholder="You get"
+          />
+          <div class="select">
+            <select formControlName="to">
+              @for(currency of currencyList$ | async; track currency.code) {
+              <option [value]="currency.code">{{ currency.code }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <button
+          (click)="reverse()"
+          class="button reverse-btn is-primary is-rounded is-outlined"
+        >
+          <div class="is-flex is-flex-direction-column">
+            <span>→</span>
+            <span>←</span>
+          </div>
+        </button>
+      </div>
+      <div class="level">
+        <div class="level-left"></div>
+        <div class="level-right">
+          <button
+            [disabled]="!form.valid"
+            (click)="triggerConvert()"
+            class="button is-primary"
+          >
+            Convert
+          </button>
+        </div>
+      </div>
+
+      <ion-list>
+        @for(record of history$(); track record.date) {
+        <ion-item>
+          <ion-label>{{ record.date | date : "short" }}</ion-label>
+          <ion-label>{{ record.from + " / " + record.to }}</ion-label>
+          <ion-label>{{ record.amount + " => " + record.result }}</ion-label>
+          <ion-label>{{ "Exchange rate: " + record.rate }}</ion-label>
+        </ion-item>
+        }
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
