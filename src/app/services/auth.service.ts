@@ -14,7 +14,7 @@ export class AuthService {
   public authError$ = new Subject<string>();
 
   private readonly STORAGE_KEY = 'user-registry';
-  private readonly SESSION_KEY = 'user-session';
+  static SESSION_KEY = 'user-session';
   private readonly SESSION_TTL = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
   private storageService = inject(StorageService);
@@ -68,19 +68,18 @@ export class AuthService {
 
   logOut() {
     this.isAuthenticated$.next(false);
-    localStorage.removeItem(this.SESSION_KEY);
+    localStorage.removeItem(AuthService.SESSION_KEY);
   }
 
   private setSession() {
     localStorage.setItem(
-      this.SESSION_KEY,
+      AuthService.SESSION_KEY,
       JSON.stringify(Date.now() + this.SESSION_TTL)
     );
   }
 
   private getSessionStatus() {
-    const session = localStorage.getItem(this.SESSION_KEY);
-
+    const session = localStorage.getItem(AuthService.SESSION_KEY);
     return Date.now() < Number(session || 0) ? true : false;
   }
 }
